@@ -29,9 +29,6 @@ class ModelStub {
 
   use UploadableTrait;
 
-  protected $uploadable = [
-    'input_1' => [],
-    'input_2' => []
-  ];
+  protected $uploadable = ['input_1','input_2'];
 
 }

@@ -32,7 +32,7 @@ trait UploadableTrait {
   {
     if ($this->uploadable)
     {
-      foreach ($this->uploadable as $key => $params)
+      foreach ($this->uploadable as $key)
       {
         if (Request::hasFile($key))
         {

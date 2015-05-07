@@ -1,8 +1,8 @@
 # Uploadable
 
-Automatically handle file uploads for Laravel models.
+A trait to automatically handle file uploads for Laravel models.
 
-## Usage
+## Example Usage
 
     use MikeFrancis\Uploadable\Uploadable;
     use Illuminate\Database\Eloquent\Model;
@@ -11,21 +11,18 @@ Automatically handle file uploads for Laravel models.
 
       use Uploadable;
 
-      protected $uploadable = [
-        'featured_image' => [
-          'width'  => 400,
-          'height' => 400
-        ]
-      ];
+      protected $uploadable = ['featured_image'];
 
     }
 
-First we include the trait we're going to take advantage:
+Let's break it down. First we include the trait we're going to take advantage:
 
-    use MikeFrancis\Uploadable\Uploadable;
+    use MikeFrancis\Uploadable\UploadableTrait;
 
 Then in our model we use the trait:
 
-    use Uploadable;
+    use UploadableTrait;
 
-The package will then use the configuration in `$uploadable` to deal with your file uploads. The keys of this array are the file inputs which you'd like to access.
+Our model's `$uploadbale` is an array of file input name attributes which you'd like to be automatically handled by the trait.
+
+It's as simple as that. Standby for more features coming soon!
