@@ -1,6 +1,5 @@
 <?php namespace MikeFrancis\Uploadable;
 
-use Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
