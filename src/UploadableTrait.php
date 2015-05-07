@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-trait Uploadable {
+trait UploadableTrait {
 
   /**
    * Where to store any uploads.
@@ -15,12 +15,21 @@ trait Uploadable {
   public $uploadDir = 'uploads';
 
   /**
+   * Boot the trait's observer.
+   * 
+   * @return void
+   */
+  public static function bootUploadableTrait()
+  {
+    static::observe(new UploadableObserver);
+  }
+
+  /**
    * When saving a model, upload any 'uploadable' fields.
    * 
-   * @param  array  $options
    * @return bool
    */
-  public function save(array $options = array())
+  public function performUploads()
   {
     if ($this->uploadable)
     {
@@ -28,9 +37,9 @@ trait Uploadable {
       {
         if (Request::hasFile($key))
         {
-          if ($this->original)
+          if ($this->original && $this->original[$key])
           {
-            $this->deleteExisting($this->original[$key]);
+            $this->deleteExisting($key);
           }
           $file = Request::file($key);
           $ext = '.' . $file->getClientOriginalExtension();
@@ -40,7 +49,6 @@ trait Uploadable {
         }
       }
     }
-    return parent::save($options);
   }
 
   /**
@@ -48,7 +56,7 @@ trait Uploadable {
    * 
    * @return bool|null
    */
-  public function delete()
+  public function performDeletes()
   {
     if ($this->uploadable)
     {
