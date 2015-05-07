@@ -26,6 +26,6 @@ First we include the trait we're going to take advantage:
 
 Then in our model we use the trait:
 
-  use Uploadable;
+    use Uploadable;
 
 The package will then use the configuration in `$uploadable` to deal with your file uploads. The keys of this array are the file inputs which you'd like to access.
