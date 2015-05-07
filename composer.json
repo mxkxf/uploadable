@@ -1,0 +1,14 @@
+{
+    "name": "mikefrancis/uploadable",
+    "description": "Automatically handle file uploads for Laravel models.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mike Francis",
+            "email": "mikeffrancis@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+    }
+}
