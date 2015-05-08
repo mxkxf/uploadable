@@ -1,6 +1,7 @@
 <?php
 
 use \Mockery;
+// use \Illuminate\Database\Eloquent\Model;
 use MikeFrancis\Uploadable\UploadableTrait;
 
 class UploadableTraitTest extends PHPUnit_Framework_TestCase {
@@ -10,6 +11,7 @@ class UploadableTraitTest extends PHPUnit_Framework_TestCase {
    */
   public function setUp() {
     $this->model = Mockery::mock('UploadableModelStub');
+    $this->model->makePartial();
   }
 
   /**
@@ -19,8 +21,9 @@ class UploadableTraitTest extends PHPUnit_Framework_TestCase {
     Mockery::close();
   }
 
-  public function testItDoesSomething() {
-    
+  public function test_it_checks_uploadables_can_only_be_an_array() {
+    $uploadables = $this->model->getUploadables();
+    $this->assertTrue(is_array($uploadables));
   }
 
 }
@@ -29,6 +32,6 @@ class UploadableModelStub {
 
   use UploadableTrait;
 
-  protected $uploadable = ['input_1','input_2'];
+  protected $uploadables = ['input_1','input_2'];
 
 }

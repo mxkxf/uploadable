@@ -11,7 +11,7 @@ trait UploadableTrait {
    * 
    * @var string
    */
-  public $uploadDir = 'uploads';
+  private $uploadDir = 'uploads';
 
   /**
    * Boot the trait's observer.
@@ -24,28 +24,38 @@ trait UploadableTrait {
   }
 
   /**
+   * Uploadable fields getter.
+   * 
+   * @return array
+   */
+  public function getUploadables()
+  {
+    return $this->uploadables;
+  }
+
+  /**
    * When saving a model, upload any 'uploadable' fields.
    * 
-   * @return bool
+   * @return void
    */
   public function performUploads()
   {
-    if ($this->uploadable)
+    if ($this->getUploadables())
     {
-      foreach ($this->uploadable as $key)
+      throw new Exception('Uploadables is blank.');
+    }
+    foreach ($this->getUploadables() as $key)
+    {
+      if (Request::hasFile($key))
       {
-        if (Request::hasFile($key))
+        if ($this->original && $this->original[$key])
         {
-          if ($this->original && $this->original[$key])
-          {
-            $this->deleteExisting($key);
-          }
-          $file = Request::file($key);
-          $ext = '.' . $file->getClientOriginalExtension();
-          $filename = basename($file->getClientOriginalName(), $ext) . '-' . time() . $ext;
-          Storage::put($filename, File::get($file));
-          $this->attributes[$key] = $this->getFullPath($filename);
+          $this->deleteExisting($key);
         }
+        $file     = Request::file($key);
+        $filename = $this->createFilename($file);
+        Storage::put($filename, file_get_contents($file));
+        $this->attributes[$key] = $this->getFullPath($filename);
       }
     }
   }
@@ -53,18 +63,30 @@ trait UploadableTrait {
   /**
    * When deleting a model, cleanup the file system too.
    * 
-   * @return bool|null
+   * @return void
    */
   public function performDeletes()
   {
-    if ($this->uploadable)
+    if ($this->getUploadables())
     {
-      foreach ($this->uploadable as $key => $params)
-      {
-        $this->deleteExisting($key);
-      }
+      throw new Exception('Uploadables is blank.');
     }
-    return parent::delete();
+    foreach ($this->getUploadables() as $key => $params)
+    {
+      $this->deleteExisting($key);
+    }
+  }
+
+  /**
+   * Create a unique filename.
+   * 
+   * @param  File   $file
+   * @return string
+   */
+  private function createFilename(File $file)
+  {
+    $ext = '.' . $file->getClientOriginalExtension();
+    return basename($file->getClientOriginalName(), $ext) . '-' . time() . $ext;
   }
 
   /**
