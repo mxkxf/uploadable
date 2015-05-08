@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 trait UploadableTrait {
 
@@ -61,7 +60,7 @@ trait UploadableTrait {
           $this->deleteExisting($key);
         }
         $file     = Request::file($key);
-        $filename = $this->createFilename($file);
+        $filename = $this->createFilename($file->getClientOriginalName());
         Storage::put($filename, file_get_contents($file));
         $this->attributes[$key] = $this->getFullPath($filename);
       }
@@ -98,13 +97,13 @@ trait UploadableTrait {
   /**
    * Create a unique filename.
    * 
-   * @param  UploadedFile   $file
+   * @param  string $filename
    * @return string
    */
-  private function createFilename(UploadedFile $file)
+  private function createFilename($filename)
   {
-    $ext = '.' . $file->getClientOriginalExtension();
-    return basename($file->getClientOriginalName(), $ext) . '-' . time() . $ext;
+    $path = pathinfo($filename);
+    return $path['filename'] . '-' . time() . '.' . $path['extension'];
   }
 
   /**
