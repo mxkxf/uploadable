@@ -11,7 +11,7 @@ A trait to automatically handle file uploads for Laravel models.
 
       use Uploadable;
 
-      protected $uploadable = ['featured_image'];
+      protected $uploadables = ['featured_image'];
 
     }
 
@@ -23,6 +23,6 @@ Then in our model we use the trait:
 
     use UploadableTrait;
 
-Our model's `$uploadbale` is an array of file input name attributes which you'd like to be automatically handled by the trait.
+Our model's `$uploadables` is an array of file input name attributes which you'd like to be automatically handled by the trait.
 
 It's as simple as that. Standby for more features coming soon!
