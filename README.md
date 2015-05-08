@@ -4,6 +4,8 @@ A trait to automatically handle file uploads for Laravel models.
 
 ## Example Usage
 
+Here's the package integrated into a bog-standard Laravel 5 model.
+
     use MikeFrancis\Uploadable\Uploadable;
     use Illuminate\Database\Eloquent\Model;
 
