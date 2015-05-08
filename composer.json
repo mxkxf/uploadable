@@ -14,5 +14,10 @@
     "require-dev": {
         "phpunit/phpunit": "^4.6",
         "mockery/mockery": "^0.9.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "MikeFrancis\\Uploadable\\": "src/"
+        }
     }
 }

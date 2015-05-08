@@ -1,7 +1,7 @@
 <?php
 
 use \Mockery;
-use \MikeFrancis\Uploadable\UploadableTrait;
+use MikeFrancis\Uploadable\UploadableTrait;
 
 class UploadableTraitTest extends PHPUnit_Framework_TestCase {
 
@@ -9,7 +9,7 @@ class UploadableTraitTest extends PHPUnit_Framework_TestCase {
    * Prepare tests.
    */
   public function setUp() {
-    $this->model = Mockery::mock('ModelStub');
+    $this->model = Mockery::mock('UploadableModelStub');
   }
 
   /**
@@ -25,7 +25,7 @@ class UploadableTraitTest extends PHPUnit_Framework_TestCase {
 
 }
 
-class ModelStub {
+class UploadableModelStub {
 
   use UploadableTrait;
 
