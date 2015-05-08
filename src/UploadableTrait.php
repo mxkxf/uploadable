@@ -1,8 +1,9 @@
 <?php namespace MikeFrancis\Uploadable;
 
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 trait UploadableTrait {
 
@@ -71,22 +72,26 @@ trait UploadableTrait {
     }
   }
 
-
+  /**
+   * Check is $uploadables is a non-empty array.
+   * 
+   * @return void
+   */
   private function checkForUploadables()
   {
     if (! $this->getUploadables())
     {
-      throw new NoUploadablesException('Uploadables is blank.');
+      throw new NoUploadablesException('$this->uploadables must be a non-empty array.');
     }
   }
 
   /**
    * Create a unique filename.
    * 
-   * @param  File   $file
+   * @param  UploadedFile   $file
    * @return string
    */
-  private function createFilename(File $file)
+  private function createFilename(UploadedFile $file)
   {
     $ext = '.' . $file->getClientOriginalExtension();
     return basename($file->getClientOriginalName(), $ext) . '-' . time() . $ext;
