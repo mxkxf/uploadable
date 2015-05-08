@@ -21,10 +21,29 @@ class UploadableTraitTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
-   * Test that a model's $uploadable array can only be
+   * Create some dummy $uploadables.
+   */
+  private function setUploadables()
+  {
+    $this->model->setUploadables(['input_1', 'input_2']);
+  }
+
+  /**
+   * Test that an exception is thrown for a Model which uses 
+   * the trait but doesn't have an $uploadables property.
+   */
+  public function testThrowExceptionForEmptyOrNoUploadables()
+  {
+    $this->setExpectedException('MikeFrancis\Uploadable\NoUploadablesException');
+    $this->model->performUploads();
+  }
+
+  /**
+   * Test that a model's $uploadable array can only be 
    * a non-empty array.
    */
   public function testCheckUploadbalesCanOnlyBeNonEmptyArray() {
+    $this->setUploadables();
     $uploadables = $this->model->getUploadables();
     $this->assertTrue(is_array($uploadables));
     $this->assertTrue(count($uploadables) > 0);
@@ -43,10 +62,10 @@ class UploadableModelStub {
   use UploadableTrait;
 
   /**
-   * Assign some dummy fields.
+   * Create uploadables placeholder.
    * 
    * @var array
    */
-  protected $uploadables = ['input_1','input_2'];
+  protected $uploadables;
 
 }

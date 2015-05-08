@@ -25,6 +25,16 @@ trait UploadableTrait {
   }
 
   /**
+   * Uploadable fields setter.
+   * 
+   * @param array $uploadables
+   */
+  public function setUploadables($uploadables)
+  {
+    $this->uploadables = $uploadables;
+  }
+
+  /**
    * Uploadable fields getter.
    * 
    * @return array
