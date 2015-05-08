@@ -1,7 +1,6 @@
 <?php
 
 use \Mockery;
-// use \Illuminate\Database\Eloquent\Model;
 use MikeFrancis\Uploadable\UploadableTrait;
 
 class UploadableTraitTest extends PHPUnit_Framework_TestCase {
@@ -21,17 +20,33 @@ class UploadableTraitTest extends PHPUnit_Framework_TestCase {
     Mockery::close();
   }
 
-  public function test_it_checks_uploadables_can_only_be_an_array() {
+  /**
+   * Test that a model's $uploadable array can only be
+   * a non-empty array.
+   */
+  public function testCheckUploadbalesCanOnlyBeNonEmptyArray() {
     $uploadables = $this->model->getUploadables();
     $this->assertTrue(is_array($uploadables));
+    $this->assertTrue(count($uploadables));
   }
 
 }
 
+/**
+ * Model stub for tests.
+ */
 class UploadableModelStub {
 
+  /**
+   * Use the uploadable trait.
+   */
   use UploadableTrait;
 
+  /**
+   * Assign some dummy fields.
+   * 
+   * @var array
+   */
   protected $uploadables = ['input_1','input_2'];
 
 }
