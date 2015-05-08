@@ -40,10 +40,7 @@ trait UploadableTrait {
    */
   public function performUploads()
   {
-    if ($this->getUploadables())
-    {
-      throw new Exception('Uploadables is blank.');
-    }
+    $this->checkForUploadables();
     foreach ($this->getUploadables() as $key)
     {
       if (Request::hasFile($key))
@@ -67,13 +64,19 @@ trait UploadableTrait {
    */
   public function performDeletes()
   {
-    if ($this->getUploadables())
-    {
-      throw new Exception('Uploadables is blank.');
-    }
-    foreach ($this->getUploadables() as $key => $params)
+    $this->checkForUploadables();
+    foreach ($this->getUploadables() as $key)
     {
       $this->deleteExisting($key);
+    }
+  }
+
+
+  private function checkForUploadables()
+  {
+    if (! $this->getUploadables())
+    {
+      throw new NoUploadablesException('Uploadables is blank.');
     }
   }
 
