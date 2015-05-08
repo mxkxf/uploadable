@@ -27,7 +27,7 @@ class UploadableTraitTest extends PHPUnit_Framework_TestCase {
   public function testCheckUploadbalesCanOnlyBeNonEmptyArray() {
     $uploadables = $this->model->getUploadables();
     $this->assertTrue(is_array($uploadables));
-    $this->assertTrue(count($uploadables));
+    $this->assertTrue(count($uploadables) > 0);
   }
 
 }
